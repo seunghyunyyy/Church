@@ -26,7 +26,7 @@ public class BulletinService {
         String BulletinMainURL;
         if (Objects.equals(Date, "0") || Date == null) BulletinMainURL = BASEURL + "/front/F060600";
         else  {
-            //@Todo 어떤 입력 방식에서든 검색이 가능하게 구현하기
+            //20230101 230101 23
             String year, mon, day;
             if (isNumber(Date)) { //입력된 일자가 정수로 되어 있을 때
                 long tmp = Long.parseLong(Date);
@@ -34,9 +34,9 @@ public class BulletinService {
                 mon = ((tmp % 10000) / 100) + "월";
                 day = (tmp % 100) + "일";
             }   else {
-                year = Date.split("년")[0].replace(" ", "") + "년";
-                mon = Integer.parseInt(Date.split("년")[1].split("월")[0].replace(" ", "")) + "월";
-                day = Integer.parseInt(Date.split("년")[1].split("월")[1].split("일")[0].replace(" ", "")) + "일";
+                year = Date.split("년")[0].replaceAll(" ", "") + "년";
+                mon = Integer.parseInt(Date.split("년")[1].split("월")[0].replaceAll(" ", "")) + "월";
+                day = Integer.parseInt(Date.split("년")[1].split("월")[1].split("일")[0].replaceAll(" ", "")) + "일";
             }
             BulletinMainURL = BASEURL + "/front/F060600?searchKey=title&searchWord=" + year + "%20" + mon + "%20" + day;
         }
@@ -52,7 +52,7 @@ public class BulletinService {
         Elements titleDay = doc.select("h3.title_view");
         String tmp = titleDay.toString().split(">")[1].split("<")[0];
 
-        return (tmp.split("년")[0] + tmp.split("년")[1].split("월")[0] + tmp.split("년")[1].split("월")[1].split("일")[0]).replace(" ", "");
+        return (tmp.split("년")[0] + tmp.split("년")[1].split("월")[0] + tmp.split("년")[1].split("월")[1].split("일")[0]).replaceAll(" ", "");
     }
 
     public static ArrayList<String> getBulletinPhotosURL(String Date) {
@@ -113,21 +113,31 @@ public class BulletinService {
         return bulletin;
     }
 
+    /**
+     * @param date 230101 or 20230101 or 2023년 1월 1일 or 2023년 01월 01일
+     * @return
+     */
     public static String changDate(String date) {
+        date = date.replaceAll(" ", "");
         if (Objects.equals(date, "0") || date == null) {
             date = changeBulletinNullToDate("0");
-        } else if (!isNumber(date)) {
+        }
+        if (!isNumber(date)) {
             String year, mon, day;
-            year = date.split("년")[0].replace(" ", "");
-            mon = date.split("년")[1].split("월")[0].replace(" ", "");
-            day = date.split("년")[1].split("월")[1].split("일")[0].replace(" ", "");
-            date = year + mon + day;
-        } else if ((Long.parseLong(date) / 10000000) == 0) {
+            year = date.split("년")[0].replaceAll(" ", "");
+            mon = date.split("년")[1].split("월")[0].replaceAll(" ", "");
+            day = date.split("년")[1].split("월")[1].split("일")[0].replaceAll(" ", "");
+            System.out.println(year+"/"+mon+"/"+day);
+            if (Integer.parseInt(mon) < 10 && mon.charAt(0) != '0')     mon = "0" + mon;
+            if (Integer.parseInt(day) < 10 && day.charAt(0) != '0')     day = "0" + day;
+            date = (String) year + (String) mon + (String) day;
+        }
+        if ((Long.parseLong(date) / 10000000) == 0) {
             long tmp = 20 * 1000000 + Long.parseLong(date);
             date = Long.toString(tmp);
-        } else date = date.replace(" ", "");
+        }
 
-        return date;
+        return date.replaceAll(" ", "");
     }
 
 
