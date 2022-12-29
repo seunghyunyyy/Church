@@ -5598,3 +5598,61 @@ java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-10.1.4.jar:10.1.4]
 	at java.base/java.lang.Thread.run(Thread.java:833) ~[na:na]
 
+2022-12-29T21:59:35.529+09:00  INFO 20896 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-12-29T21:59:35.533+09:00  INFO 20896 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-12-29T21:59:35.541+09:00  INFO 20896 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-12-29T21:59:41.036+09:00  INFO 7660 --- [restartedMain] c.c.s.cs_server.CsServerApplication      : Starting CsServerApplication using Java 17.0.5 with PID 7660 (C:\Users\Develop\csAPP\Server\CS_Server\build\classes\java\main started by 02100 in C:\Users\Develop\csAPP\Server\CS_Server)
+2022-12-29T21:59:41.038+09:00  INFO 7660 --- [restartedMain] c.c.s.cs_server.CsServerApplication      : No active profile set, falling back to 1 default profile: "default"
+2022-12-29T21:59:41.076+09:00  INFO 7660 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-12-29T21:59:41.076+09:00  INFO 7660 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-12-29T21:59:41.632+09:00  INFO 7660 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-12-29T21:59:41.682+09:00  INFO 7660 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 43 ms. Found 1 JPA repository interfaces.
+2022-12-29T21:59:42.177+09:00  INFO 7660 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-12-29T21:59:42.185+09:00  INFO 7660 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-12-29T21:59:42.186+09:00  INFO 7660 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.4]
+2022-12-29T21:59:42.241+09:00  INFO 7660 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-12-29T21:59:42.242+09:00  INFO 7660 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1165 ms
+2022-12-29T21:59:42.370+09:00  INFO 7660 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-12-29T21:59:42.419+09:00  INFO 7660 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.6.Final
+2022-12-29T21:59:42.562+09:00  WARN 7660 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2022-12-29T21:59:42.667+09:00  INFO 7660 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-12-29T21:59:42.904+09:00  INFO 7660 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@12d604d7
+2022-12-29T21:59:42.907+09:00  INFO 7660 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-12-29T21:59:42.958+09:00  INFO 7660 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2022-12-29T21:59:43.607+09:00  INFO 7660 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-12-29T21:59:43.615+09:00  INFO 7660 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-12-29T21:59:44.224+09:00  INFO 7660 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-12-29T21:59:44.259+09:00  INFO 7660 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-12-29T21:59:44.267+09:00  INFO 7660 --- [restartedMain] c.c.s.cs_server.CsServerApplication      : Started CsServerApplication in 3.713 seconds (process running for 4.461)
+2022-12-29T21:59:54.613+09:00  INFO 7660 --- [http-nio-8080-exec-3] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-12-29T21:59:54.614+09:00  INFO 7660 --- [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-12-29T21:59:54.615+09:00  INFO 7660 --- [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2022-12-29T22:11:18.399+09:00  INFO 7660 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-12-29T22:11:18.404+09:00  INFO 7660 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2022-12-29T22:11:18.411+09:00  INFO 7660 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2022-12-29T22:11:21.530+09:00  INFO 5916 --- [restartedMain] c.c.s.cs_server.CsServerApplication      : Starting CsServerApplication using Java 17.0.5 with PID 5916 (C:\Users\Develop\csAPP\Server\CS_Server\build\classes\java\main started by 02100 in C:\Users\Develop\csAPP\Server\CS_Server)
+2022-12-29T22:11:21.534+09:00  INFO 5916 --- [restartedMain] c.c.s.cs_server.CsServerApplication      : No active profile set, falling back to 1 default profile: "default"
+2022-12-29T22:11:21.583+09:00  INFO 5916 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2022-12-29T22:11:21.583+09:00  INFO 5916 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2022-12-29T22:11:22.176+09:00  INFO 5916 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-12-29T22:11:22.230+09:00  INFO 5916 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 47 ms. Found 1 JPA repository interfaces.
+2022-12-29T22:11:22.739+09:00  INFO 5916 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2022-12-29T22:11:22.749+09:00  INFO 5916 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2022-12-29T22:11:22.749+09:00  INFO 5916 --- [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.4]
+2022-12-29T22:11:22.805+09:00  INFO 5916 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2022-12-29T22:11:22.805+09:00  INFO 5916 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1221 ms
+2022-12-29T22:11:22.924+09:00  INFO 5916 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-12-29T22:11:22.979+09:00  INFO 5916 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.1.6.Final
+2022-12-29T22:11:23.135+09:00  WARN 5916 --- [restartedMain] org.hibernate.orm.deprecation            : HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2022-12-29T22:11:23.248+09:00  INFO 5916 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2022-12-29T22:11:23.520+09:00  INFO 5916 --- [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@11a52488
+2022-12-29T22:11:23.522+09:00  INFO 5916 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2022-12-29T22:11:23.576+09:00  INFO 5916 --- [restartedMain] SQL dialect                              : HHH000400: Using dialect: org.hibernate.dialect.MySQLDialect
+2022-12-29T22:11:24.278+09:00  INFO 5916 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-12-29T22:11:24.289+09:00  INFO 5916 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-12-29T22:11:24.891+09:00  INFO 5916 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2022-12-29T22:11:24.930+09:00  INFO 5916 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2022-12-29T22:11:24.937+09:00  INFO 5916 --- [restartedMain] c.c.s.cs_server.CsServerApplication      : Started CsServerApplication in 3.778 seconds (process running for 4.432)
+2022-12-29T22:11:27.636+09:00  INFO 5916 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-12-29T22:11:27.637+09:00  INFO 5916 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2022-12-29T22:11:27.638+09:00  INFO 5916 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms

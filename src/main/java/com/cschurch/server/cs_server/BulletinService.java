@@ -119,19 +119,28 @@ public class BulletinService {
      */
     public static String changDate(String date) {
         date = date.replaceAll(" ", "");
+
+        // 날짜를 입력받지 않을 경우 changeBulletinNullToDate를 호출하여 가장 최근 날짜를 불러옴.
         if (Objects.equals(date, "0") || date == null) {
             date = changeBulletinNullToDate("0");
         }
+
+        // 입력받은 date에 한글이 있는 경우
         if (!isNumber(date)) {
             String year, mon, day;
+
+            // 년/월/일 로 입력한 date를 20230101형식으로 바꾸기 위한 과정
             year = date.split("년")[0].replaceAll(" ", "");
             mon = date.split("년")[1].split("월")[0].replaceAll(" ", "");
             day = date.split("년")[1].split("월")[1].split("일")[0].replaceAll(" ", "");
-            System.out.println(year+"/"+mon+"/"+day);
+
+            //2023년 01월 01일을 20230101로 저장하기 위한 과정 -> 이 과정이 없다면 date는 202311로 저장이 됨
             if (Integer.parseInt(mon) < 10 && mon.charAt(0) != '0')     mon = "0" + mon;
             if (Integer.parseInt(day) < 10 && day.charAt(0) != '0')     day = "0" + day;
+
             date = (String) year + (String) mon + (String) day;
         }
+        // 입력받은 date가 230101 형식으로 입력된 경우 20230101 형식으로 변환하는 과정. 100년이 지날 경우 수정해야 함.
         if ((Long.parseLong(date) / 10000000) == 0) {
             long tmp = 20 * 1000000 + Long.parseLong(date);
             date = Long.toString(tmp);
