@@ -75,7 +75,6 @@ public class API {
                 strings.add(jsonArray.get(i).getAsString());
             }
         }
-        System.out.println(strings);
         return BulletinService.stringToBulletinJsonArray(strings.toString());
     }
     @GetMapping("/bulletin/{date}")
