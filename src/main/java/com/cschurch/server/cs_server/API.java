@@ -21,8 +21,15 @@ import java.util.Objects;
 @RequestMapping(value = "/server/v1")
 public class API {
     private final BulletinRepository bulletinRepository;
-    //private final Json json;
 
+    /**
+     * @param date 2023년 01월 01일 & 2023년 1월 1일 & 띄어쓰기 없이 가능
+     *              23년 01월 01일 23년 1월 1일 & 띄어쓰기 없이 가능
+     *              230101
+     *             all 입력 시 모든 주보를 db에 업로드함.
+     *             미입력 시 자동으로 가장 최근 주보를 db에 업로드함.
+     * @return
+     */
     @PostMapping("/bulletin") // 크롤링 하여서 datebase에 저장
     public List<Bulletin> postBulletin(@RequestParam(name = "date", required = false, defaultValue = "new") String date)  { // 파라미터로 아무런 값도 받지 않을 시 기본 값인 new로 설정.
         List<Bulletin> bulletinList = new ArrayList<>();
@@ -40,10 +47,11 @@ public class API {
     }
 
     /**
-     * 주보를 페이지 단위로 가져오는 api
-     * @param sort 정렬 방식(기본값 : 내림차순)
+     * 주보를 페이지 단위로 가져dha
+     * @param sort 정렬 방식(기본값 : 내림차순(DESC))
      * @param num 한 페이지에 표시할 일자(기본값 : 10)
      * @param page 표시할 페이지(기본값 : 1)
+     *             num 또는 page에 all 값 입력 시 모든 주보를 가져옴.
      * @return
      * @throws JsonIOException
      */
@@ -77,10 +85,18 @@ public class API {
         }
         return BulletinService.stringToBulletinJsonArray(strings.toString());
     }
+
+    /**
+     * @param date 2023년 01월 01일 & 2023년 1월 1일 & 띄어쓰기 없이 가능
+     *              23년 01월 01일 23년 1월 1일 & 띄어쓰기 없이 가능
+     *              230101
+     * @return
+     * @throws JsonIOException
+     * 특정 일자의 주보를 가져옴
+     */
     @GetMapping("/bulletin/{date}")
     public JsonObject getBulletinObject(@PathVariable("date") String date) throws JsonIOException{
         date = BulletinService.changDate(date);
         return BulletinService.stringToBulletinJsonObject(new Gson().toJson(bulletinRepository.findByDate(date).get()));
     }
-
 }
