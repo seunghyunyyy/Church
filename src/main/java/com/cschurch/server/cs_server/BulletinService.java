@@ -14,19 +14,18 @@ import java.util.Objects;
 public class BulletinService {
     private static final String BASEURL = "https://www.cschurch.or.kr";
     private static String URL = null;
+    private static ArrayList<String> URLs = new ArrayList<String>();
     private static final ArrayList<String> PhotoUrlList = new ArrayList<>();
     private static Document doc = null;
 
-    public static boolean isNumber(String str) {
+    public static boolean isNumber(String str) { // 정수인지 확인하는 함수
         try {   Long.parseLong(str);    return true;    }
         catch (NumberFormatException e) { return false; }
     }
-
-    public static void getBulletinSiteURL(String Date) {
+    public static void getBulletinSiteURL(String Date) { // 웹 크롤링을 통해 주보 사진이 있는 URL 추출
         String BulletinMainURL;
-        if (Objects.equals(Date, "0") || Date == null) BulletinMainURL = BASEURL + "/front/F060600";
+        if (Objects.equals(Date, "0") || Date == null) BulletinMainURL = BASEURL + "/front/F060600"; // 입력받은 일자가 없거나 0이면 가장 최근 일자
         else  {
-            //20230101 230101 23
             String year, mon, day;
             if (isNumber(Date)) { //입력된 일자가 정수로 되어 있을 때
                 long tmp = Long.parseLong(Date);
@@ -44,17 +43,46 @@ public class BulletinService {
         Elements site = doc.select("ul.board_list").select("li").select("a"); //해당 일자의 게시물 넘버
         URL = BASEURL + "/board/F060600" + "/1/" + site.toString().split("'")[1] + "?page=1";
     }
+    public static void getBulletinSiteURLs() {
+        int page = 0;
+        do {
+            page++;
+            String date = null;
+            String tmpURL = BASEURL + "/front/F060600?page=" + page + "&searchKey=title&searchWord=";
+            try {
+                doc = Jsoup.connect(tmpURL).get();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
+            Elements el1 = doc.select("ul.board_list").select("li");
+            for (Element tmp : el1) {
+                date = tmp.select("a").toString().split(">")[1].split("<")[0];
+                URL = BASEURL + "/board/F060600" + "/1/" + tmp.select("a").toString().split("'")[1] + "?page=1";
+                URLs.add(URL);
+            }
+            if (Objects.equals(date, "2021년 5월 2일")) break;
+        } while (true);
+        // 반복문 문제 가능성 99%
+        URL = null;
+    }
     public static String changeBulletinNullToDate(String Date) {
         getBulletinSiteURL(Date);
 
         try { doc = Jsoup.connect(URL).get(); } catch (IOException e) { e.printStackTrace(); }
-        Elements titleDay = doc.select("h3.title_view");
-        String tmp = titleDay.toString().split(">")[1].split("<")[0];
+        String tmp = doc.select("h3.title_view").toString().split(">")[1].split("<")[0];
 
-        return (tmp.split("년")[0] + tmp.split("년")[1].split("월")[0] + tmp.split("년")[1].split("월")[1].split("일")[0]).replaceAll(" ", "");
+        // 년/월/일 로 입력한 date를 20230101형식으로 바꾸기 위한 과정
+        String year = tmp.split("년")[0].replaceAll(" ", "");
+        String mon = tmp.split("년")[1].split("월")[0].replaceAll(" ", "");
+        String day = tmp.split("년")[1].split("월")[1].split("일")[0].replaceAll(" ", "");
+
+        //2023년 01월 01일을 20230101로 저장하기 위한 과정 -> 이 과정이 없다면 date는 202311로 저장이 됨
+        if (Integer.parseInt(mon) < 10 && mon.charAt(0) != '0')     mon = "0" + mon;
+        if (Integer.parseInt(day) < 10 && day.charAt(0) != '0')     day = "0" + day;
+
+        return year + mon + day;
     }
-
     public static ArrayList<String> getBulletinPhotosURL(String Date) {
         String PhotoURL;
         getBulletinSiteURL(Date);
@@ -66,7 +94,38 @@ public class BulletinService {
         }
         return PhotoUrlList;
     }
-    public static Bulletin getBulletin(String date, Bulletin bulletin, ArrayList<String> bulletinPhotos) {
+
+    /**
+     * 모든 주보를 가져옴
+     * @return
+     */
+    public static ArrayList<Bulletin> getBulletins() {
+        ArrayList<Bulletin> bulletins = new ArrayList<>();
+        getBulletinSiteURLs();
+        for (String url : URLs) { // url 별로 반복
+            ArrayList<String> PhotoUrlList = new ArrayList<>();
+            try { doc = Jsoup.connect(url).get(); } catch (IOException e) { e.printStackTrace(); }
+            Elements photosURL = doc.select("div.view_contents").select("p").select("img");
+            for (Element photo : photosURL) {
+                String PhotoURL = BASEURL + photo.toString().split("\"")[1]; //임시
+                PhotoUrlList.add(PhotoURL); // -> 한 페이지의 모든 주보를 저장함
+            }
+            String date = doc.select("h3.title_view").toString().split(">")[1].split("<")[0];
+            Bulletin bulletin = getBulletin(date, PhotoUrlList);
+
+            bulletins.add(bulletin);
+        }
+        return bulletins;
+    }
+
+    /**
+     * @param date  원하는 날짜 입력
+     * @param bulletinPhotos
+     * @return
+     */
+    public static Bulletin getBulletin(String date, ArrayList<String> bulletinPhotos) {
+        Bulletin bulletin = new Bulletin();
+
         date = changDate(date);
 
         bulletin.setDate(date);
@@ -78,9 +137,9 @@ public class BulletinService {
         bulletin.setBulletin6(bulletinPhotos.get(5));
         bulletin.setBulletin7(bulletinPhotos.get(6));
         bulletin.setBulletin8(bulletinPhotos.get(7));
+
         return bulletin;
     }
-
     public static JsonObject stringToBulletinJsonObject(String jsonString) {
         JsonObject bulletin = new JsonObject();
         JsonObject photoJson = new JsonObject();
@@ -119,9 +178,12 @@ public class BulletinService {
      */
     public static String changDate(String date) {
         date = date.replaceAll(" ", "");
+        if (date.equals("2021년12년12일")) {
+            date = "2021년12월12일";
+        }
 
-        // 날짜를 입력받지 않을 경우 changeBulletinNullToDate를 호출하여 가장 최근 날짜를 불러옴.
-        if (Objects.equals(date, "0") || date == null) {
+        // 날짜가 new인 경우 changeBulletinNullToDate를 호출하여 가장 최근 날짜를 불러옴.
+        if (Objects.equals(date, "0")) {
             date = changeBulletinNullToDate("0");
         }
 
