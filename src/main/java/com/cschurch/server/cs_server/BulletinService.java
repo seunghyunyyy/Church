@@ -1,7 +1,10 @@
 package com.cschurch.server.cs_server;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -140,13 +143,52 @@ public class BulletinService {
 
         return bulletin;
     }
+    public static JsonArray stringToBulletinJsonArray(String jsonString) {
+
+        JsonArray jsonArray = new JsonArray();
+        JsonArray tmp = (JsonArray) JsonParser.parseString(jsonString);
+        for (int i = 0; i < tmp.size(); i++) {
+            JsonObject bulletin = new JsonObject();
+            JsonObject photoJson = new JsonObject();
+            JsonObject jsonObject = (JsonObject) tmp.get(i);
+
+            String date = jsonObject.get("date").getAsString();
+
+            String bulletin1 = jsonObject.get("bulletin1").getAsString();
+            String bulletin2 = jsonObject.get("bulletin2").getAsString();
+            String bulletin3 = jsonObject.get("bulletin3").getAsString();
+            String bulletin4 = jsonObject.get("bulletin4").getAsString();
+            String bulletin5 = jsonObject.get("bulletin5").getAsString();
+            String bulletin6 = jsonObject.get("bulletin6").getAsString();
+            String bulletin7 = jsonObject.get("bulletin7").getAsString();
+            String bulletin8 = jsonObject.get("bulletin8").getAsString();
+
+            photoJson.addProperty("bulletin1", bulletin1);
+            photoJson.addProperty("bulletin2", bulletin2);
+            photoJson.addProperty("bulletin3", bulletin3);
+            photoJson.addProperty("bulletin4", bulletin4);
+            photoJson.addProperty("bulletin5", bulletin5);
+            photoJson.addProperty("bulletin6", bulletin6);
+            photoJson.addProperty("bulletin7", bulletin7);
+            photoJson.addProperty("bulletin8", bulletin8);
+
+            bulletin.addProperty("date", date);
+            bulletin.add("photo", photoJson);
+
+            System.out.println(bulletin);
+
+            jsonArray.add(bulletin);
+            System.out.println(jsonArray);
+        }
+        return jsonArray;
+    }
     public static JsonObject stringToBulletinJsonObject(String jsonString) {
         JsonObject bulletin = new JsonObject();
         JsonObject photoJson = new JsonObject();
 
         JsonObject jsonObject = (JsonObject) JsonParser.parseString(jsonString);
 
-        Long date = jsonObject.get("date").getAsLong();
+        String date = jsonObject.get("date").getAsString();
 
         String bulletin1 = jsonObject.get("bulletin1").getAsString();
         String bulletin2 = jsonObject.get("bulletin2").getAsString();
