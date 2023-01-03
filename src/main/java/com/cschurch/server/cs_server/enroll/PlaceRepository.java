@@ -6,11 +6,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface PlaceRepository extends JpaRepository<Place, String> {
-    Place findByRoomNumber(Long roomNumber);
-    Place findByName(String name);
+    Place findByRoomName(String roomName);
     Place findByMember(Integer member);
 
-    List<Place> findByRoomNumberContaining(Long roomNumber);
-    List<Place> findByNameContaining(String name);
+    List<Place> findByRoomNameContaining(String roomName);
     List<Place> findByMemberContaining(Integer member);
 }

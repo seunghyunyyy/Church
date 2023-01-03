@@ -8,9 +8,9 @@ import java.util.List;
 
 @Repository
 public interface PlaceEnrollRepository extends JpaRepository<Place_Enroll, Long> {
-    Place_Enroll findByUser(User user);
-    Place_Enroll findByPlace(Place place);
+    Place_Enroll findByEmail(String email);
+    Place_Enroll findByRoomName(String roomName);
 
-    List<Place_Enroll> findByUserContaining(User user);
-    List<Place_Enroll> findByPlaceContaining(Place place);
+    List<Place_Enroll> findByEmailContaining(String email);
+    List<Place_Enroll> findByRoomNameContaining(String roomName);
 }
