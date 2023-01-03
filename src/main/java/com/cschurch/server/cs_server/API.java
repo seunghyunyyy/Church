@@ -1,5 +1,6 @@
 package com.cschurch.server.cs_server;
 
+import com.cschurch.server.cs_server.enroll.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonIOException;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +23,11 @@ import java.util.Objects;
 @RequestMapping(value = "/server/v1")
 public class API {
     private final BulletinRepository bulletinRepository;
+    private final EducationRepository educationRepository;
+    private final PlaceRepository placeRepository;
+    private final EducationEnrollRepository educationEnrollRepository;
+    private final PlaceEnrollRepository placeEnrollRepository;
+    private final UserRepository userRepository;
 
     /**
      * @param date 2023년 01월 01일 & 2023년 1월 1일 & 띄어쓰기 없이 가능
@@ -47,7 +54,7 @@ public class API {
     }
 
     /**
-     * 주보를 페이지 단위로 가져dha
+     * 주보를 페이지 단위로 가져와
      * @param sort 정렬 방식(기본값 : 내림차순(DESC))
      * @param num 한 페이지에 표시할 일자(기본값 : 10)
      * @param page 표시할 페이지(기본값 : 1)
@@ -60,6 +67,7 @@ public class API {
                                         @RequestParam(name = "num", required = false, defaultValue = "10") String num,
                                         @RequestParam(name = "page", required = false, defaultValue = "1") String page) throws JsonIOException{
         JsonArray jsonArray = new JsonArray();
+
         List<Bulletin> bulletins = new ArrayList<>();
         List<String> strings = new ArrayList<>();
 
@@ -98,5 +106,28 @@ public class API {
     public JsonObject getBulletinObject(@PathVariable("date") String date) throws JsonIOException{
         date = BulletinService.changDate(date);
         return BulletinService.stringToBulletinJsonObject(new Gson().toJson(bulletinRepository.findByDate(date).get()));
+    }
+    @PostMapping("/education")
+    public Education postEducation(@RequestBody Education education) throws IOException {
+        return educationRepository.save(new Education(education.getTeacher(), education.getSubjectName(), education.getTime()));
+    }
+    @PostMapping("/education/enroll")
+    public Education_Enroll postEducationEnroll(@RequestBody Education_Enroll education_enroll) throws IOException {
+        return educationEnrollRepository.save(new Education_Enroll(education_enroll.getEmail(), education_enroll.getSubjectName(),
+                education_enroll.getSituation(), education_enroll.getEnrollTime()));
+    }
+    @PostMapping("/place")
+    public Place postPlace(@RequestBody Place place) throws IOException {
+        return placeRepository.save(new Place(place.getRoomName(), place.getMember()));
+    }
+    @PostMapping("/place/enroll")
+    public Place_Enroll postPlaceEnroll(@RequestBody Place_Enroll place_enroll) throws IOException {
+        return placeEnrollRepository.save(new Place_Enroll(place_enroll.getEmail(), place_enroll.getRoomName(), place_enroll.getMember(),
+                place_enroll.getSituation()));
+    }
+    @PostMapping("/user")
+    public User postUser(@RequestBody User user) throws IOException {
+        return userRepository.save(new User(user.getEmail(), user.getToken(), user.getName(), user.getSex(),
+                user.getAge(), user.getBirth(), user.getPhone(), user.getHome(), user.getOfficer(), user.getProfile()));
     }
 }
