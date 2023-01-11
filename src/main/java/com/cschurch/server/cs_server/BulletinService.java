@@ -21,16 +21,13 @@ public class BulletinService {
     private static final ArrayList<String> PhotoUrlList = new ArrayList<>();
     private static Document doc = null;
 
-    public static boolean isNumber(String str) { // 정수인지 확인하는 함수
-        try {   Long.parseLong(str);    return true;    }
-        catch (NumberFormatException e) { return false; }
-    }
+
     public static void getBulletinSiteURL(String Date) { // 웹 크롤링을 통해 주보 사진이 있는 URL 추출
         String BulletinMainURL;
         if (Objects.equals(Date, "0") || Date == null) BulletinMainURL = BASEURL + "/front/F060600"; // 입력받은 일자가 없거나 0이면 가장 최근 일자
         else  {
             String year, mon, day;
-            if (isNumber(Date)) { //입력된 일자가 정수로 되어 있을 때
+            if (Service.isNumber(Date)) { //입력된 일자가 정수로 되어 있을 때
                 long tmp = Long.parseLong(Date);
                 year = (tmp / 10000) + "년";
                 mon = ((tmp % 10000) / 100) + "월";
@@ -230,7 +227,7 @@ public class BulletinService {
         }
 
         // 입력받은 date에 한글이 있는 경우
-        if (!isNumber(date)) {
+        if (!Service.isNumber(date)) {
             String year, mon, day;
 
             // 년/월/일 로 입력한 date를 20230101형식으로 바꾸기 위한 과정
