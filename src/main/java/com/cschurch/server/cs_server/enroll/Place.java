@@ -13,12 +13,12 @@ import lombok.*;
 @NoArgsConstructor
 public class Place {
     @Id
-    private String roomName; // 방 이름
+    private String room; // 방 이름
     private Integer member; // 수용 인원
 
     @Builder
-    public Place(String roomName, Integer member) {
-        this.roomName = roomName;
+    public Place(String room, Integer member) {
+        this.room = room;
         this.member = member;
     }
 }
