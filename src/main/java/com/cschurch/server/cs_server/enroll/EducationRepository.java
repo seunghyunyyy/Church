@@ -9,10 +9,10 @@ import java.util.List;
 @Repository
 public interface EducationRepository extends JpaRepository<Education, String>{
     Education findByTeacher(String teacher);
-    Education findBySubjectName(String subjectName);
+    Education findBySubject(String subject);
     Education findByTime(String time);
 
     List<Education> findByTeacherContaining(String teacher);
-    List<Education> findBySubjectNameContaining(String subjectName);
+    List<Education> findBySubjectContaining(String subject);
     List<Education> findByTimeContaining(String time);
 }
