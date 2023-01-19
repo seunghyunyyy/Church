@@ -1,6 +1,7 @@
 package com.cschurch.server.cs_server;
 
 import com.cschurch.server.cs_server.enroll.*;
+import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonIOException;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -204,8 +207,13 @@ public class API {
     }
 
     @GetMapping("/youtube/channelId")
-    public String getChannelId() {
-        return YouTubeService.getChannelId("AIzaSyAUtQ_AOWPhTa1L-opp3z4vQjP_FhJvFUo", "ilSg5UU1NBQ");
+    public String getChannelId(@RequestParam(name = "APIKey", required = false, defaultValue = "AIzaSyAUtQ_AOWPhTa1L-opp3z4vQjP_FhJvFUo") String APIKey,
+                               @RequestParam(name = "videoId", required = false, defaultValue = "W4CqY8fWL_0") String videoId) {
+        return YouTubeService.getChannelId(APIKey, videoId);
+    }
+    @GetMapping("/youtube/livestream")
+    public void start() throws GeneralSecurityException, IOException, GoogleJsonResponseException {
+        YouTubeService.startStream();
     }
 
 }
