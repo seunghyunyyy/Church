@@ -1,6 +1,5 @@
 package com.cschurch.server.cs_server.enroll;
 
-import com.cschurch.server.cs_server.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

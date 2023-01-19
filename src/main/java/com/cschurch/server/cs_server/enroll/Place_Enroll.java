@@ -1,12 +1,7 @@
 package com.cschurch.server.cs_server.enroll;
 
-import com.cschurch.server.cs_server.User;
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-
-import java.time.LocalDateTime;
 
 @ToString
 @Getter
