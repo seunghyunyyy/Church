@@ -16,7 +16,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 @Controller
-@RequestMapping(value = "/google")
+@RequestMapping(value = "/server/v1/google")
 public class GoogleController {
 
     private final ConfigUtils configUtils;
@@ -42,9 +42,7 @@ public class GoogleController {
     }
 
     @GetMapping(value = "/login/redirect")
-    public ResponseEntity<GoogleLoginDto> redirectGoogleLogin(
-            @RequestParam(value = "code") String authCode
-    ) {
+    public ResponseEntity<GoogleLoginDto> redirectGoogleLogin(@RequestParam(value = "code") String authCode) {
         // HTTP 통신을 위해 RestTemplate 활용
         RestTemplate restTemplate = new RestTemplate();
         GoogleLoginRequest requestParams = GoogleLoginRequest.builder()
